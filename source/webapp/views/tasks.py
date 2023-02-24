@@ -8,8 +8,7 @@ from static.classes.static import Static
 
 def add_view(request: WSGIRequest):
     if request.method == "GET":
-        choices = Static.choices
-        return render(request, 'task_create.html', context={'choices': choices})
+        return render(request, 'task_create.html', context={'choices': Static.choices})
 
     if request.POST.get('completion_date') != "":
         completion_date = request.POST.get('completion_date')
@@ -31,3 +30,15 @@ def detail_view(request, pk):
     return render(request, 'task.html', context={
         'task': task
     })
+
+
+def update_view(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    if request.method == "POST":
+        task.title = request.POST.get('title')
+        task.description = request.POST.get('description')
+        task.status = request.POST.get('status')
+        task.completion_date = request.POST.get('completion_date')
+        task.save()
+        return redirect('detail_view', pk=task.pk)
+    return render(request, 'task_update.html', context={'task': task, 'choices': Static.choices})
