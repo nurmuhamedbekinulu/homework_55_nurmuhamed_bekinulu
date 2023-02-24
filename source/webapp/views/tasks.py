@@ -40,5 +40,5 @@ def update_view(request, pk):
         task.status = request.POST.get('status')
         task.completion_date = request.POST.get('completion_date')
         task.save()
-        return redirect('detail_view', pk=task.pk)
+        return redirect('task_detail', pk=task.pk)
     return render(request, 'task_update.html', context={'task': task, 'choices': Static.choices})
