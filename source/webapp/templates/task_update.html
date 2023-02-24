@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
-{% block title %}Создать новую задачу{% endblock %}
+{% block title %}Редактировать задачу{% endblock %}
 {% block content%}
-<h1>Создать новую задачу</h1>
+<h1>Редактировать задачу</h1>
 <div class="form  col-8">
-    <form action="{% url 'task_add' %}" method="post">
+    <form action="{% url 'task_update' task.pk %}" method="post">
         {% csrf_token %}
         <div class="mb-3 row">
             <label for="title" class="col-sm-2 col-form-label">Заголовок</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="title" name="title">
+                <input type="text" class="form-control" id="title" name="title" value="{{ task.title }}">
             </div>
         </div>
         <div class="mb-3 row">
             <label for="description" class="col-sm-2 col-form-label">Описание</label>
             <div class="col-sm-10">
-                <textarea class="form-control" name="description" id="description" cols="30" rows="10"></textarea>
+                <textarea class="form-control" name="description" id="description" cols="30" rows="10">{{ task.description }}</textarea>
             </div>
         </div>
         <div class="mb-3 row">
@@ -22,7 +22,11 @@
             <div class="col-sm-10">
                 <select id="status" name="status" class="form-select">
                     {% for choice in choices %}
-                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                    {% if task.status == choice.0 %}
+                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                    {% else %}
+                        <option value="{{ choice.0 }}" >{{ choice.1 }}</option>
+                    {% endif %}
                     {% endfor %}
                 </select>
             </div>
@@ -31,7 +35,7 @@
             <label for="completion_date" class="col-sm-2 col-form-label">Выполнить до</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="completion_date" name="completion_date"
-                    placeholder="YYYY-mm-dd">
+                    placeholder="YYYY-mm-dd" value="{{ task.completion_date }}">
             </div>
         </div>
         <div class="d-grid gap-2 col-8 mx-auto">
