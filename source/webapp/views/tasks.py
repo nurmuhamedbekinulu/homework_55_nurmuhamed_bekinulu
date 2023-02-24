@@ -42,3 +42,14 @@ def update_view(request, pk):
         task.save()
         return redirect('task_detail', pk=task.pk)
     return render(request, 'task_update.html', context={'task': task, 'choices': Static.choices})
+
+
+def delete_view(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    return render(request, 'task_confirm_delete.html', context={'task': task, 'choices': Static.choices})
+
+
+def confirm_delete(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    task.delete()
+    return redirect('index')
