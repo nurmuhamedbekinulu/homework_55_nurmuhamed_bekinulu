@@ -1,5 +1,6 @@
 from django.db import models
 from static.classes.static import Static
+from datetime import timezone
 
 # Create your models here.
 
@@ -20,3 +21,8 @@ class Task(models.Model):
 
     def __str__(self):
         return f"{self.title} - {self.description}"
+
+    def delete(self, using=None, keep_parents=False):
+        self.is_deleted = True
+        self.deleted_at = timezone.now()
+        self.save()
