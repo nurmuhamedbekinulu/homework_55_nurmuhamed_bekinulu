@@ -4,7 +4,7 @@ from webapp.models import Task
 
 
 def index_view(request: WSGIRequest):
-    tasks = Task.objects.all()
+    tasks = Task.objects.exclude(is_deleted=True)
     context = {
         'tasks': tasks
     }

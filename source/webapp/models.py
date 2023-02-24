@@ -1,6 +1,6 @@
 from django.db import models
 from static.classes.static import Static
-from datetime import timezone
+from django.utils import timezone
 
 # Create your models here.
 

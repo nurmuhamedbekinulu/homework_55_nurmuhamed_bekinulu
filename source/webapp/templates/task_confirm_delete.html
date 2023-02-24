@@ -12,7 +12,7 @@
             <p>Описание: {{ task.description|linebreaks  }}</p>
             <p>Статус: {{ task.status }}</p>
             <p>Выполнить до: {{ task.completion_date }}</p>
-            <form action="{% url 'confirm_delete' task.pk %}}" method="post">
+            <form action="{% url 'confirm_delete' task.pk %}" method="post">
                 {% csrf_token %}
                 <p><input type="submit" value="Удалить"></p>
                 <p><a href="{% url 'index' %}">Отмена</a></p>
